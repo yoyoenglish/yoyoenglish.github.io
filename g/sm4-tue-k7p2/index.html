@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>YOYO English — группа</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFCFF;--grid:#DCE7F6;--ink:#1E2A4A;--ink-soft:#56627F;
+  --marker:#F1C651;--redpen:#D93A3F;--blue:#2F6FDB;--line:#C9D6EA;--panel:#FFFFFF;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#18213A;--grid:#223056;--ink:#E8EDF8;--ink-soft:#A4B0CC;
+    --marker:#F1C651;--redpen:#FF6B6F;--blue:#7FA8F5;--line:#33426B;--panel:#1C2745;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;background-attachment:fixed;
+  font-family:"Rubik",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.page{max-width:520px;margin:0 auto;padding-bottom:48px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+header{padding:22px 20px 8px}
+.brand{display:flex;align-items:center;gap:14px}
+.mark{height:62px;padding:0 14px;background:var(--marker);border-radius:10px;color:#fff;
+  font-weight:800;font-size:28px;letter-spacing:.5px;display:flex;align-items:center}
+.brand .name{font-weight:800;font-size:26px;letter-spacing:-.5px;line-height:1.1}
+h1{margin:12px 0 0;font-size:19px;font-weight:700}
+.when{color:var(--ink-soft);font-size:14px}
+.tabs{display:flex;gap:4px;padding:12px 16px 0;border-bottom:2px solid var(--ink)}
+.tabs button{flex:1;font:inherit;font-size:14px;font-weight:500;border:2px solid var(--ink);border-bottom:none;
+  background:var(--panel);color:var(--ink);padding:9px 4px;border-radius:10px 10px 0 0;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--marker);color:#1E2A4A}
+.pane{padding:16px}
+.hw{background:var(--panel);border:2px solid var(--ink);border-radius:6px;padding:14px 16px;margin-bottom:14px;
+  box-shadow:4px 4px 0 var(--ink)}
+.hw.old{opacity:.6;box-shadow:none}
+.hw-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.hw-date{font-weight:700}
+.due{font-family:"Caveat",cursive;font-size:22px;color:var(--redpen);white-space:nowrap}
+.hw ol{margin:8px 0 6px;padding-left:20px}
+.hw li{margin:3px 0}
+.note{font-family:"Caveat",cursive;font-size:21px;line-height:1.2;color:var(--redpen);margin-top:6px}
+figure{margin:0 0 18px;background:var(--panel);border:2px solid var(--ink);border-radius:6px;overflow:hidden}
+figure img{display:block;width:100%;height:auto}
+figcaption{padding:10px 14px;font-size:14px;color:var(--ink-soft)}
+figcaption b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.trainer{display:block;text-decoration:none;color:var(--ink);background:var(--panel);border:2px solid var(--ink);
+  border-radius:6px;padding:12px 14px;margin-bottom:10px}
+.trainer b{display:block}
+.trainer i{font-style:normal;font-size:13px;color:var(--ink-soft)}
+.trainer:hover{background:var(--marker);color:#1E2A4A}
+.trainer:hover i{color:#1E2A4A}
+.empty{color:var(--ink-soft);font-size:15px;padding:8px 2px}
+.warn{margin:12px 16px 0;padding:10px 12px;border:2px dashed var(--redpen);border-radius:6px;
+  color:var(--redpen);font-size:13px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand"><div class="mark">YOYO</div><div class="name">English</div></div>
+    <h1 id="g-title">Группа</h1>
+    <div class="when" id="g-when"></div>
+  </header>
+  <p class="warn" id="warn" hidden></p>
+  <div class="tabs" role="tablist" aria-label="Разделы">
+    <button role="tab" aria-selected="true" data-pane="hw">Домашка</button>
+    <button role="tab" aria-selected="false" data-pane="gr">Грамматика</button>
+    <button role="tab" aria-selected="false" data-pane="tr">Тренажёры</button>
+  </div>
+  <div class="pane" id="p-hw"></div>
+  <div class="pane" id="p-gr" hidden></div>
+  <div class="pane" id="p-tr" hidden></div>
+</div>
+
+<script>
+const FALLBACK = {
+  group:{title:"Группа SM4 (Super Minds 4)",schedule:"Вторник и четверг, 16:00"},
+  homework:[],grammar:[],trainers:[]
+};
+
+function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+
+function render(d){
+  document.getElementById('g-title').textContent=d.group.title;
+  document.getElementById('g-when').textContent=d.group.schedule;
+  document.title="YOYO English — "+d.group.title;
+
+  const hw=document.getElementById('p-hw');hw.textContent='';
+  if(!d.homework.length) hw.append(el('p','empty','Задания появятся после ближайшего урока.'));
+  d.homework.forEach((h,i)=>{
+    const c=el('article','hw'+(i?' old':''));
+    const top=el('div','hw-top');
+    top.append(el('div','hw-date',h.date));
+    if(h.due) top.append(el('div','due',h.due));
+    c.append(top);
+    const ol=el('ol');(h.tasks||[]).forEach(t=>ol.append(el('li',null,t)));
+    c.append(ol);
+    if(h.note) c.append(el('div','note',h.note));
+    if(h.img){const im=new Image();im.src=h.img;im.alt="";im.loading="lazy";
+      const f=el('figure');f.append(im);c.append(f);}
+    hw.append(c);
+  });
+
+  const gr=document.getElementById('p-gr');gr.textContent='';
+  if(!d.grammar.length) gr.append(el('p','empty','Здесь будут объяснения и фото с доски.'));
+  d.grammar.forEach(g=>{
+    const f=el('figure');
+    if(g.img){const im=new Image();im.src=g.img;im.alt=g.title||"";im.loading="lazy";f.append(im);}
+    const cap=el('figcaption');
+    cap.append(el('b',null,g.title||''));
+    if(g.note) cap.append(document.createTextNode(g.note));
+    f.append(cap);gr.append(f);
+  });
+
+  const tr=document.getElementById('p-tr');tr.textContent='';
+  if(!d.trainers.length) tr.append(el('p','empty','Тренажёры скоро появятся.'));
+  d.trainers.forEach(t=>{
+    const a=el('a','trainer');a.href=t.href;a.target="_blank";a.rel="noopener";
+    a.append(el('b',null,t.title));
+    if(t.sub) a.append(el('i',null,t.sub));
+    tr.append(a);
+  });
+}
+
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));
+  ['hw','gr','tr'].forEach(k=>document.getElementById('p-'+k).hidden = k!==b.dataset.pane);
+}));
+
+fetch('data.json',{cache:'no-store'})
+  .then(r=>{if(!r.ok) throw new Error(r.status);return r.json();})
+  .then(render)
+  .catch(()=>{
+    const w=document.getElementById('warn');
+    w.hidden=false;
+    w.textContent='Файл data.json не загрузился. Так бывает, если страница открыта двойным щелчком с диска: браузер запрещает читать соседние файлы. На сайте всё работает.';
+    render(FALLBACK);
+  });
+</script>
+</body>
+</html>
