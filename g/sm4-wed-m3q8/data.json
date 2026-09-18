@@ -3,7 +3,17 @@
     "title": "Группа SM4 (Super Minds 4)",
     "schedule": "Среда и пятница, 16:00"
   },
-  "homework": [],
+  "homework": [
+    {
+      "id": 1789742000524,
+      "date": "18 сентября, пятница",
+      "due": "к среде",
+      "tasks": [
+        "Wb p8",
+        "заниматься по тренажеру U0 Funfair"
+      ]
+    }
+  ],
   "grammar": [],
   "trainers": [
     {
