@@ -1,0 +1,34 @@
+{
+  "groups": [
+    {
+      "slug": "sm4-tue-k7p2",
+      "title": "Группа SM4 (Super Minds 4)",
+      "schedule": "Вторник и четверг, 16:00"
+    },
+    {
+      "slug": "sm4-wed-m3q8",
+      "title": "Группа SM4 (Super Minds 4)",
+      "schedule": "Среда и пятница, 16:00"
+    },
+    {
+      "slug": "sm2-b3x9",
+      "title": "Группа SM2 (Super Minds 2)",
+      "schedule": "Среда и пятница, 15:00"
+    },
+    {
+      "slug": "sm6-t6v1",
+      "title": "Группа SM6 (Super Minds 6)",
+      "schedule": "Среда и пятница, 18:00"
+    },
+    {
+      "slug": "think-b1-r5m8",
+      "title": "Группа Think B1+",
+      "schedule": "Вторник 18:00, четверг 17:00"
+    },
+    {
+      "slug": "sm3-w4z7",
+      "title": "Группа SM3 (Super Minds 3)",
+      "schedule": "Вторник и четверг, 15:15"
+    }
+  ]
+}
