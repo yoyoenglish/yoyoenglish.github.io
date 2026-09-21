@@ -29,6 +29,16 @@
       "slug": "sm3-w4z7",
       "title": "Группа SM3 (Super Minds 3)",
       "schedule": "Вторник и четверг, 15:15"
+    },
+    {
+      "slug": "think-b1-p4d7",
+      "title": "Группа Think B1",
+      "schedule": "Понедельник и среда, 17:10"
+    },
+    {
+      "slug": "think-b1p-online-h8c2",
+      "title": "Группа Think B1+ online",
+      "schedule": "Понедельник и четверг, 18:10"
     }
   ]
 }
