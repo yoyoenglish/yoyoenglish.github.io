@@ -3,7 +3,18 @@
     "title": "Группа Think B1+ online",
     "schedule": "Понедельник и четверг, 18:10"
   },
-  "homework": [],
+  "homework": [
+    {
+      "id": 1790014151949,
+      "date": "21 сентября, понедельник",
+      "due": "к четвергу",
+      "tasks": [
+        "Study the grammar tab in our journal",
+        "занимайтесь по тренажеру U1 Future"
+      ],
+      "note": "Внимательно изучите шпаргалку по грамматике"
+    }
+  ],
   "grammar": [],
   "trainers": []
 }
