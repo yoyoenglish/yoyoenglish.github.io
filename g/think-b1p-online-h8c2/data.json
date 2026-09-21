@@ -15,6 +15,12 @@
       "note": "Внимательно изучите шпаргалку по грамматике"
     }
   ],
-  "grammar": [],
+  "grammar": [
+    {
+      "id": 1790014243413,
+      "title": "Future forms",
+      "img": "img/2026-09-21-gr-vl7k.jpg"
+    }
+  ],
   "trainers": []
 }
