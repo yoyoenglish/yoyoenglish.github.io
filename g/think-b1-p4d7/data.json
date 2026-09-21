@@ -15,5 +15,12 @@
     }
   ],
   "grammar": [],
-  "trainers": []
+  "trainers": [
+    {
+      "id": 1790006906968,
+      "title": "Present Perfect",
+      "sub": "Already, Yet",
+      "href": "https://yoyoenglish.github.io/b1-present-perfect/"
+    }
+  ]
 }
