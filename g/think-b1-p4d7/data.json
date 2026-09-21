@@ -3,7 +3,16 @@
     "title": "Группа Think B1",
     "schedule": "Понедельник и среда, 17:10"
   },
-  "homework": [],
+  "homework": [
+    {
+      "id": 1790006538284,
+      "date": "21 сентября, понедельник",
+      "due": "",
+      "tasks": [
+        "Тренажер Present Perfect Already, Yet - send me screenshots with your xp level"
+      ]
+    }
+  ],
   "grammar": [],
   "trainers": []
 }
