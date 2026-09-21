@@ -22,5 +22,12 @@
       "img": "img/2026-09-21-gr-vl7k.jpg"
     }
   ],
-  "trainers": []
+  "trainers": [
+    {
+      "id": 1790014962859,
+      "title": "Future Forms",
+      "sub": "will/ be going to / present continuous",
+      "href": "https://yoyoenglish.github.io/think3/future-forms/"
+    }
+  ]
 }
