@@ -15,7 +15,13 @@
       ]
     }
   ],
-  "grammar": [],
+  "grammar": [
+    {
+      "id": 1790092902820,
+      "title": "U1 like doing / likes doing",
+      "img": "img/2026-09-22-gr-9id2.png"
+    }
+  ],
   "trainers": [
     {
       "id": 1789742442245,
