@@ -3,7 +3,17 @@
     "title": "Группа Think B1+",
     "schedule": "Вторник 18:00, четверг 17:00"
   },
-  "homework": [],
+  "homework": [
+    {
+      "id": 1790094036656,
+      "date": "22 сентября, вторник",
+      "due": "к четвергу",
+      "tasks": [
+        "Study the grammar tab - future forms",
+        "Practice online exercise - Future Forms"
+      ]
+    }
+  ],
   "grammar": [
     {
       "id": 1790093930207,
