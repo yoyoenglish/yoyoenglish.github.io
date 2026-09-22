@@ -4,7 +4,14 @@
     "schedule": "Вторник 18:00, четверг 17:00"
   },
   "homework": [],
-  "grammar": [],
+  "grammar": [
+    {
+      "id": 1790093930207,
+      "title": "U1 Future Forms",
+      "note": "Will/ be going to / Pr. Cont",
+      "img": "img/2026-09-22-gr-7zto.jpg"
+    }
+  ],
   "trainers": [
     {
       "id": 1790093616640,
