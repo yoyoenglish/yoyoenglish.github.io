@@ -5,6 +5,15 @@
   },
   "homework": [
     {
+      "id": 1790183116238,
+      "date": "23 сентября, среда",
+      "due": "к пятнице",
+      "tasks": [
+        "Wb p 11"
+      ],
+      "note": "Study the grammar tab before doing hw"
+    },
+    {
       "id": 1789750917377,
       "date": "18 сентября, пятница",
       "due": "к среде",
