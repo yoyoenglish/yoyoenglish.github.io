@@ -5,6 +5,15 @@
   },
   "homework": [
     {
+      "id": 1790873582007,
+      "date": "1 октября, четверг",
+      "due": "ко вторнику",
+      "tasks": [
+        "Study the grammar tab - Present Perfect / Present Perfect Continuous",
+        "Тренажер Present Perfect / Present Perfect Continuous + screenshots"
+      ]
+    },
+    {
       "id": 1790701238416,
       "date": "29 сентября, вторник",
       "due": "к четвергу",
