@@ -5,6 +5,15 @@
   },
   "homework": [
     {
+      "id": 1791301900283,
+      "date": "6 октября, вторник",
+      "due": "к чт",
+      "tasks": [
+        "Doing U1 test next time. Just revise all you need before it - It's up to you !"
+      ],
+      "note": "тренажеры!"
+    },
+    {
       "id": 1790873582007,
       "date": "1 октября, четверг",
       "due": "ко вторнику",
