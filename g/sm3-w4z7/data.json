@@ -1,7 +1,8 @@
 {
   "group": {
     "title": "Группа SM3 (Super Minds 3)",
-    "schedule": "Вторник и четверг, 15:15"
+    "schedule": "Вторник и четверг, 15:15",
+    "results": true
   },
   "homework": [
     {
@@ -109,5 +110,6 @@
       "sub": "explorers",
       "href": "https://yoyoenglish.github.io/sm3-explorers/"
     }
-  ]
+  ],
+  "results": []
 }
