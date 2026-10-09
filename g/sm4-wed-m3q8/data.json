@@ -1,7 +1,8 @@
 {
   "group": {
     "title": "Группа SM4 (Super Minds 4)",
-    "schedule": "Среда и пятница, 16:00"
+    "schedule": "Среда и пятница, 16:00",
+    "results": true
   },
   "homework": [
     {
@@ -91,5 +92,6 @@
       "sub": "Funfair",
       "href": "https://yoyoenglish.github.io/sm4/funfair/"
     }
-  ]
+  ],
+  "results": []
 }
