@@ -1,7 +1,8 @@
 {
   "group": {
     "title": "Группа Think B1+",
-    "schedule": "Вторник 18:00, четверг 17:00"
+    "schedule": "Вторник 18:00, четверг 17:00",
+    "results": true
   },
   "homework": [
     {
@@ -96,5 +97,6 @@
       "title": "U1 Big decisions",
       "href": "https://yoyoenglish.github.io/think3/big-decisions/"
     }
-  ]
+  ],
+  "results": []
 }
