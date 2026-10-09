@@ -39,6 +39,16 @@
       "slug": "think-b1p-online-h8c2",
       "title": "Группа Think B1+ online",
       "schedule": "Понедельник и четверг, 18:10"
+    },
+    {
+      "slug": "sm1-m9l8",
+      "title": "Группа SM1 (Super Minds 1)",
+      "schedule": "Вторник и пятница, 17:00"
+    },
+    {
+      "slug": "think-b2-h7w1",
+      "title": "Группа Think B2",
+      "schedule": "Среда и четверг, 19:00"
     }
   ]
 }
