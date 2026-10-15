@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Super Minds, Unit 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f6; --surface:#ffffff; --ink:#1d2433; --muted:#667085; --line:#d9dee8;
+  --lamp-off:#e3e7ee; --track:#e6e9f0; --neutral:#5b6b8c;
+  --c90:#2f9d4a; --c80:#6cbf4f; --c70:#a6d58a; --c60:#f2c94c; --c0:#e5735c;
+  --tl-body:#2a3142;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141821; --surface:#1e2430; --ink:#eef1f6; --muted:#9aa4b8; --line:#323a4b;
+    --lamp-off:#3a4254; --track:#2c3342; --neutral:#a9b6d3; --tl-body:#0f131b;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141821; --surface:#1e2430; --ink:#eef1f6; --muted:#9aa4b8; --line:#323a4b;
+  --lamp-off:#3a4254; --track:#2c3342; --neutral:#a9b6d3; --tl-body:#0f131b;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.45}
+h1,h2,.num{font-family:"Unbounded","Golos Text",system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+h1{font-size:clamp(22px,3.4vw,32px);font-weight:800;margin:0;letter-spacing:-.01em}
+.theme-btn{font:inherit;font-size:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.theme-btn:focus-visible,.stu:focus-visible{outline:3px solid var(--c80);outline-offset:2px}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:14px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+
+.layout{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}
+.list{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px}
+.stu{display:flex;align-items:center;justify-content:space-between;gap:8px;font:inherit;font-weight:500;text-align:left;background:transparent;color:var(--ink);border:0;border-radius:10px;padding:10px 12px;cursor:pointer}
+.stu:hover{background:var(--bg)}
+.stu[aria-selected="true"]{background:var(--ink);color:var(--surface)}
+.stu .dot{width:10px;height:10px;border-radius:50%;flex:none}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;display:grid;grid-template-columns:minmax(240px,300px) 1fr;gap:28px}
+.left{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.left h2{font-size:26px;margin:0;font-weight:700}
+.sub{color:var(--muted);font-size:14px;margin-top:-6px}
+.ring{position:relative;width:200px;height:200px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .pct{font-size:44px;font-weight:800;line-height:1}
+.ring .pts{font-size:13px;color:var(--muted);margin-top:6px}
+.ring circle.val{transition:stroke-dashoffset .7s ease}
+@media (prefers-reduced-motion:reduce){.ring circle.val{transition:none}}
+.verdict{font-weight:600;font-size:17px}
+
+.tl{display:inline-flex;flex-direction:column;gap:6px;background:var(--tl-body);border-radius:16px;padding:8px}
+.tl i{display:block;border-radius:50%;background:var(--lamp-off)}
+.tl.big{flex-direction:row;padding:10px 14px;gap:10px}
+.tl.big i{width:30px;height:30px}
+.tl.small{flex-direction:row;padding:5px 8px;gap:5px;border-radius:10px}
+.tl.small i{width:14px;height:14px}
+.tl i.on-red{background:var(--c0);box-shadow:0 0 10px var(--c0)}
+.tl i.on-yellow{background:var(--c60);box-shadow:0 0 10px var(--c60)}
+.tl i.on-green{box-shadow:0 0 10px currentColor}
+
+.right{display:flex;flex-direction:column;gap:12px;justify-content:center}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 16px;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.row h3{margin:0;font-size:16px;font-weight:600}
+.row .meta{color:var(--muted);font-size:14px}
+.row .rp{font-family:"Unbounded",sans-serif;font-weight:700;font-size:22px}
+.row .bar{grid-column:1/-1;height:8px;background:var(--track);border-radius:99px;overflow:hidden}
+.row .bar b{display:block;height:100%;border-radius:99px}
+.row .head{display:flex;align-items:center;gap:12px}
+.att{border:2px dashed var(--line)}
+.att .rp{color:var(--neutral)}
+.squares{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+.squares i{width:22px;height:22px;border-radius:5px;border:2px solid var(--neutral)}
+.squares i.full{background:var(--neutral)}
+
+@media (max-width:760px){
+  .layout{grid-template-columns:1fr}
+  .list{flex-direction:row;overflow-x:auto;padding:8px;-webkit-overflow-scrolling:touch}
+  .stu{flex:none}
+  .card{grid-template-columns:1fr;padding:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title"></h1>
+    <button class="theme-btn" id="themeBtn" type="button">Сменить тему</button>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="layout">
+    <nav class="list" id="list" role="tablist" aria-label="Ученики"></nav>
+    <main class="card" id="card" role="tabpanel" aria-live="polite"></main>
+  </div>
+</div>
+
+<script>
+/* ===== Данные юнита: правятся только здесь ===== */
+const UNIT = {
+  coursebook: "Super Minds 4",
+  unit: 1,
+  lessons: 6,
+  max: { lessons: 360, hw: 150, test: 310 }
+};
+const STUDENTS = [
+  { name: "Matt",   attended: 5, lessons: 220, hw: 90,  test: 210 },
+  { name: "Olesya", attended: 6, lessons: 230, hw: 130, test: 270 },
+  { name: "Vicka",  attended: 6, lessons: 290, hw: 150, test: 240 },
+  { name: "Dasha",  attended: 6, lessons: 260, hw: 150, test: 210 },
+  { name: "Zlata",  attended: 6, lessons: 360, hw: 150, test: 290 },
+  { name: "Alyona", attended: 3, lessons: 140, hw: 120, test: 230 },
+  { name: "Tim",    attended: 6, lessons: 250, hw: 150, test: 310 },
+  { name: "Mike",   attended: 6, lessons: 210, hw: 30,  test: 150 }
+];
+/* =============================================== */
+
+const SCALE = [
+  { min: 90, v: "--c90", label: "90% и выше — очень уверенно", verdict: "Очень уверенно!", lamp: "green" },
+  { min: 80, v: "--c80", label: "80–90% — уверенно",           verdict: "Уверенно",        lamp: "green" },
+  { min: 70, v: "--c70", label: "70–80% — позитивный результат", verdict: "Позитивный результат", lamp: "green" },
+  { min: 60, v: "--c60", label: "60–70% — двигаемся вперёд, но есть моменты для обсуждения", verdict: "Двигаемся вперёд, но есть моменты для обсуждения", lamp: "yellow" },
+  { min: 0,  v: "--c0",  label: "ниже 60% — нужно срочно исправлять", verdict: "Нужно срочно исправлять", lamp: "red" }
+];
+const level = p => SCALE.find(s => p >= s.min);
+const pct = (a, b) => Math.round(a / b * 100);
+const col = p => `var(${level(p).v})`;
+const MAX_TOTAL = UNIT.max.lessons + UNIT.max.hw + UNIT.max.test;
+
+function light(p, size){
+  const l = level(p);
+  const on = n => l.lamp === n;
+  return `<span class="tl ${size}" aria-hidden="true">
+    <i class="${on("red") ? "on-red" : ""}"></i>
+    <i class="${on("yellow") ? "on-yellow" : ""}"></i>
+    <i class="${on("green") ? "on-green" : ""}" style="${on("green") ? `background:${col(p)};color:${col(p)}` : ""}"></i>
+  </span>`;
+}
+
+function basket(title, got, max){
+  const p = pct(got, max);
+  return `<div class="row">
+    <div class="head">${light(p, "small")}<div><h3>${title}</h3><div class="meta">${got} из ${max} баллов</div></div></div>
+    <div class="rp">${p}%</div>
+    <div class="bar"><b style="width:${Math.min(p,100)}%;background:${col(p)}"></b></div>
+  </div>`;
+}
+
+function render(i){
+  const s = STUDENTS[i];
+  const total = s.lessons + s.hw + s.test;
+  const p = pct(total, MAX_TOTAL);
+  const r = 86, C = 2 * Math.PI * r;
+  let sq = "";
+  for (let k = 0; k < UNIT.lessons; k++) sq += `<i class="${k < s.attended ? "full" : ""}"></i>`;
+
+  document.getElementById("card").innerHTML = `
+    <section class="left">
+      <h2>${s.name}</h2>
+      <div class="sub">${UNIT.coursebook}, Unit ${UNIT.unit}</div>
+      <div class="ring" role="img" aria-label="Итог ${p}%">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="${r}" fill="none" stroke="var(--track)" stroke-width="16"/>
+          <circle class="val" cx="100" cy="100" r="${r}" fill="none" stroke="${col(p)}" stroke-width="16" stroke-linecap="round"
+            stroke-dasharray="${C}" stroke-dashoffset="${C}"/>
+        </svg>
+        <div class="center"><div class="pct num">${p}%</div><div class="pts">${total} из ${MAX_TOTAL} баллов</div></div>
+      </div>
+      ${light(p, "big")}
+      <div class="verdict">${level(p).verdict}</div>
+    </section>
+    <section class="right">
+      <div class="row att">
+        <div class="head"><div><h3>Посещено занятий</h3><div class="meta">${s.attended} из ${UNIT.lessons}</div></div></div>
+        <div class="rp">${s.attended}/${UNIT.lessons}</div>
+        <div class="squares" aria-hidden="true">${sq}</div>
+      </div>
+      ${basket("Занятия", s.lessons, UNIT.max.lessons)}
+      ${basket("Домашние задания", s.hw, UNIT.max.hw)}
+      ${basket("Тест", s.test, UNIT.max.test)}
+    </section>`;
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const c = document.querySelector(".ring circle.val");
+    if (c) c.style.strokeDashoffset = C * (1 - Math.min(p,100) / 100);
+  }));
+  document.querySelectorAll(".stu").forEach((b, k) => {
+    b.setAttribute("aria-selected", k === i ? "true" : "false");
+    b.tabIndex = k === i ? 0 : -1;
+  });
+}
+
+document.getElementById("title").textContent = `${UNIT.coursebook}, Unit ${UNIT.unit}`;
+document.title = `${UNIT.coursebook}, Unit ${UNIT.unit}`;
+document.getElementById("legend").innerHTML =
+  SCALE.map(s => `<span><i style="background:var(${s.v})"></i>${s.label}</span>`).join("");
+
+const list = document.getElementById("list");
+STUDENTS.forEach((s, i) => {
+  const p = pct(s.lessons + s.hw + s.test, MAX_TOTAL);
+  const b = document.createElement("button");
+  b.className = "stu"; b.type = "button"; b.setAttribute("role", "tab");
+  b.innerHTML = `<span>${s.name}</span><span class="dot" style="background:${col(p)}"></span>`;
+  b.addEventListener("click", () => render(i));
+  b.addEventListener("keydown", e => {
+    if (["ArrowDown","ArrowRight","ArrowUp","ArrowLeft"].includes(e.key)) {
+      e.preventDefault();
+      const n = (i + (e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1) + STUDENTS.length) % STUDENTS.length;
+      render(n); list.children[n].focus();
+    }
+  });
+  list.appendChild(b);
+});
+render(0);
+
+const root = document.documentElement;
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const dark = root.dataset.theme ? root.dataset.theme === "dark"
+    : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+});
+</script>
+</body>
+</html>
