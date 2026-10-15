@@ -59,6 +59,18 @@ figcaption b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
 .empty{color:var(--ink-soft);font-size:15px;padding:8px 2px}
 .warn{margin:12px 16px 0;padding:10px 12px;border:2px dashed var(--redpen);border-radius:6px;
   color:var(--redpen);font-size:13px}
+.res{background:var(--panel);border:2px solid var(--ink);border-radius:6px;padding:14px 16px;margin-bottom:16px;
+  box-shadow:4px 4px 0 var(--ink)}
+.res-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.res-title{font-weight:700;font-size:17px}
+.res-date{color:var(--ink-soft);font-size:14px;white-space:nowrap}
+.res figure{margin:10px 0 0}
+.res a.zoom{display:block}
+.res a.open{display:block;margin-top:10px;text-decoration:none;color:var(--ink);background:var(--marker);border:2px solid var(--ink);
+  border-radius:6px;padding:10px 14px;font-weight:700;text-align:center}
+.res a.open:hover{background:var(--panel)}
+.res .hint{color:var(--ink-soft);font-size:12.5px;margin-top:6px}
+@media (max-width:400px){.tabs button{font-size:12.5px}}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -74,16 +86,18 @@ figcaption b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
     <button role="tab" aria-selected="true" data-pane="hw">Домашка</button>
     <button role="tab" aria-selected="false" data-pane="gr">Грамматика</button>
     <button role="tab" aria-selected="false" data-pane="tr">Тренажёры</button>
+    <button role="tab" aria-selected="false" data-pane="rs" id="tab-rs" hidden>Результаты</button>
   </div>
   <div class="pane" id="p-hw"></div>
   <div class="pane" id="p-gr" hidden></div>
   <div class="pane" id="p-tr" hidden></div>
+  <div class="pane" id="p-rs" hidden></div>
 </div>
 
 <script>
 const FALLBACK = {
   group:{title:"Группа SM4 (Super Minds 4)",schedule:"Вторник и четверг, 16:00"},
-  homework:[],grammar:[],trainers:[]
+  homework:[],grammar:[],trainers:[],results:[]
 };
 
 function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
@@ -128,11 +142,35 @@ function render(d){
     if(t.sub) a.append(el('i',null,t.sub));
     tr.append(a);
   });
+
+  const rsOn=!!(d.group&&d.group.results);
+  document.getElementById('tab-rs').hidden=!rsOn;
+  const rs=document.getElementById('p-rs');rs.textContent='';
+  if(rsOn){
+    const list=d.results||[];
+    if(!list.length) rs.append(el('p','empty','Результаты появятся после проверки работы по юниту.'));
+    list.forEach(r=>{
+      const c=el('article','res');
+      const top=el('div','res-top');
+      top.append(el('div','res-title',r.title||''));
+      if(r.date) top.append(el('div','res-date',r.date));
+      c.append(top);
+      if(r.note) c.append(el('div','note',r.note));
+      if(r.href){const a=el('a','open',r.hrefLabel||'Открыть результаты →');a.href=r.href;a.target="_blank";a.rel="noopener";c.append(a);}
+      (r.imgs||[]).forEach(src=>{
+        const a=el('a','zoom');a.href=src;a.target="_blank";a.rel="noopener";
+        const im=new Image();im.src=src;im.alt=r.title||"";im.loading="lazy";
+        const f=el('figure');f.append(im);a.append(f);c.append(a);
+      });
+      if((r.imgs||[]).length) c.append(el('div','hint','Нажмите на картинку, чтобы открыть крупно.'));
+      rs.append(c);
+    });
+  }
 }
 
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));
-  ['hw','gr','tr'].forEach(k=>document.getElementById('p-'+k).hidden = k!==b.dataset.pane);
+  ['hw','gr','tr','rs'].forEach(k=>document.getElementById('p-'+k).hidden = k!==b.dataset.pane);
 }));
 
 fetch('data.json',{cache:'no-store'})
