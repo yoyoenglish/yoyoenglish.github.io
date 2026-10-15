@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Super Minds 6, Unit 1: карточка ученика</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAF2F5; --surface:#FFFFFF; --ink:#16324F; --muted:#5B7389; --line:#CFDCE4; --sea:#1F6E8C; --case:#22384F; --off:#3A5068;
+  --r:#E5533D; --y:#F2C230; --g1:#BFE09A; --g2:#73C054; --g3:#2E9A47;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0F2232;--surface:#16304A;--ink:#E8F1F6;--muted:#9DB4C6;--line:#2B4A66;--sea:#6CC3E0;--case:#0B1826;--off:#24384C;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#0F2232;--surface:#16304A;--ink:#E8F1F6;--muted:#9DB4C6;--line:#2B4A66;--sea:#6CC3E0;--case:#0B1826;--off:#24384C;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 60px}
+h1{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:clamp(26px,4.4vw,44px);line-height:1.05;margin:0 0 20px}
+.layout{display:grid;grid-template-columns:190px 1fr;gap:24px;align-items:start}
+
+/* список учеников слева */
+.students{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:12px;position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}
+.students h2{font-size:13px;font-weight:600;color:var(--muted);margin:4px 8px 8px}
+.students ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.students button{width:100%;text-align:left;font:600 16px "Golos Text",system-ui,sans-serif;color:var(--ink);background:transparent;border:0;border-radius:12px;padding:9px 12px;cursor:pointer}
+.students button:hover{background:var(--bg)}
+.students button[aria-current="true"]{background:var(--ink);color:var(--bg)}
+.students button:focus-visible{outline:3px solid var(--sea);outline-offset:2px}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:14px;color:var(--muted);margin:0 0 16px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.r{background:var(--r)}.y{background:var(--y)}.g1{background:var(--g1)}.g2{background:var(--g2)}.g3{background:var(--g3)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:26px;display:grid;grid-template-columns:minmax(220px,1fr) 1.35fr;gap:30px;align-items:center}
+.name{font-family:"Unbounded",system-ui,sans-serif;font-size:clamp(24px,4vw,36px);margin:0 0 2px;line-height:1.1}
+.meta{color:var(--muted);margin:0 0 18px}
+.ring{position:relative;width:min(230px,66vw);aspect-ratio:1;margin:0 auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .in{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .in strong{font-family:"Unbounded",system-ui,sans-serif;font-size:44px;line-height:1}
+.ring .in span{color:var(--muted);font-size:14px}
+.biglight{display:flex;gap:10px;justify-content:center;background:var(--case);border-radius:30px;padding:9px 14px;width:max-content;margin:16px auto 0}
+.biglight i{width:30px;height:30px;border-radius:50%;background:var(--off)}
+.verdict{margin:14px auto 0;text-align:center;font-weight:600;max-width:30ch}
+
+.rows{display:grid;gap:12px}
+.lrow{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px 16px;border:2px solid var(--line);border-radius:16px}
+.s{display:flex;gap:4px;background:var(--case);padding:5px;border-radius:12px}
+.s i{width:14px;height:14px;border-radius:50%;background:var(--off)}
+.lrow h3{margin:0;font-size:16px}.lrow p{margin:0;font-size:13px;color:var(--muted)}
+.lrow strong{font-family:"Unbounded",system-ui,sans-serif;font-size:20px}
+.att{border-style:dashed}
+.att .marks{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.att .marks i{width:18px;height:18px;border-radius:5px;border:2px solid var(--ink)}
+.att .marks i.on{background:var(--ink)}
+.cal{width:36px;height:36px;display:grid;place-items:center}
+.cal svg{width:30px;height:30px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:760px){
+  .layout{grid-template-columns:1fr}
+  .students{position:static;padding:8px}
+  .students h2{display:none}
+  .students ul{display:flex;overflow-x:auto;gap:6px}
+  .students button{white-space:nowrap}
+  .card{grid-template-columns:1fr;padding:20px}
+}
+@media (prefers-reduced-motion:no-preference){ .ring circle.val{transition:stroke-dashoffset .7s ease,stroke .3s} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Super Minds 6, Unit 1</h1>
+  <div class="layout">
+    <nav class="students" aria-label="Ученики">
+      <h2>Ученики</h2>
+      <ul id="list"></ul>
+    </nav>
+    <main>
+      <div class="legend" aria-label="Шкала">
+        <span><i class="dot g3"></i>90–100% очень уверенно</span>
+        <span><i class="dot g2"></i>80–89% уверенно</span>
+        <span><i class="dot g1"></i>70–79% хорошо</span>
+        <span><i class="dot y"></i>60–69% осторожно</span>
+        <span><i class="dot r"></i>ниже 60% нужно исправлять</span>
+      </div>
+      <div class="card" id="card"></div>
+    </main>
+  </div>
+</div>
+<script>
+const UNIT={book:"Super Minds 6",n:1};
+const MAX={cls:360,hw:190,test:300,lessons:6};
+MAX.total=MAX.cls+MAX.hw+MAX.test;
+const S=[
+  {n:"Alex",l:6,cls:320,hw:100,test:290},
+  {n:"Mary",l:4,cls:170,hw:70,test:0},
+  {n:"Tikhon",l:6,cls:330,hw:190,test:290},
+  {n:"Taya",l:5,cls:290,hw:190,test:280},
+  {n:"Nastya",l:6,cls:330,hw:180,test:260},
+  {n:"Anastasia",l:6,cls:250,hw:160,test:210},
+  {n:"Dasha",l:6,cls:290,hw:160,test:270},
+  {n:"Tanya",l:6,cls:280,hw:150,test:270},
+  {n:"Igor",l:6,cls:260,hw:50,test:200}
+];
+S.forEach(s=>{s.tot=s.cls+s.hw+s.test;s.pc=Math.round(s.cls/MAX.cls*100);s.ph=Math.round(s.hw/MAX.hw*100);s.pt=Math.round(s.test/MAX.test*100);s.pT=Math.round(s.tot/MAX.total*100);});
+const lvl=p=>p>=90?"g3":p>=80?"g2":p>=70?"g1":p>=60?"y":"r";
+const word={g3:"Очень уверенный результат",g2:"Уверенный, очень хороший результат",g1:"Хороший результат, двигаемся дальше",y:"Можно двигаться дальше, но осторожно: есть что подтянуть",r:"Нужно срочно исправлять — разберём вместе"};
+const lw=n=>{const a=n%10,b=n%100;return (a===1&&b!==11)?"занятие":(a>=2&&a<=4&&(b<12||b>14))?"занятия":"занятий"};
+const lamps=(p,cls="")=>{const c=lvl(p),o=c==="r"?0:c==="y"?1:2;return [0,1,2].map(i=>`<i style="${i===o?`background:var(--${c})`:''}"></i>`).join("")};
+const C=2*Math.PI*52;
+function render(i){
+  const s=S[i];
+  const parts=[["Занятия",s.pc,s.cls,MAX.cls],["Домашние задания",s.ph,s.hw,MAX.hw],["Тест",s.pt,s.test,MAX.test]];
+  const marks=Array.from({length:MAX.lessons},(_,k)=>`<i class="${k<s.l?'on':''}"></i>`).join("");
+  document.getElementById("card").innerHTML=`
+  <div>
+    <h2 class="name">${s.n}</h2>
+    <p class="meta">${UNIT.book}, Unit ${UNIT.n}</p>
+    <div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="12"/>
+      <circle class="val" cx="60" cy="60" r="52" fill="none" stroke-width="12" stroke-linecap="round" style="stroke:var(--${lvl(s.pT)});stroke-dasharray:${C};stroke-dashoffset:${C*(1-s.pT/100)}"/></svg>
+      <div class="in"><strong>${s.pT}%</strong><span>${s.tot} из ${MAX.total} баллов</span></div></div>
+    <div class="biglight" aria-hidden="true">${lamps(s.pT)}</div>
+    <p class="verdict">${word[lvl(s.pT)]}</p>
+  </div>
+  <div class="rows">
+    <div class="lrow att">
+      <div class="cal" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+      <div><h3>Посещено занятий</h3><div class="marks" aria-hidden="true">${marks}</div></div>
+      <strong>${s.l} из ${MAX.lessons}</strong>
+    </div>
+    ${parts.map(([t,p,v,m])=>`<div class="lrow"><div class="s" aria-hidden="true">${lamps(p)}</div><div><h3>${t}</h3><p>${v} из ${m} баллов</p></div><strong>${p}%</strong></div>`).join("")}
+  </div>`;
+  document.querySelectorAll("#list button").forEach((b,k)=>b.setAttribute("aria-current",k===i));
+}
+document.getElementById("list").innerHTML=S.map((s,i)=>`<li><button data-i="${i}">${s.n}</button></li>`).join("");
+document.querySelectorAll("#list button").forEach(b=>b.addEventListener("click",()=>render(+b.dataset.i)));
+render(0);
+</script>
+</body>
+</html>
