@@ -80,6 +80,12 @@
   ],
   "trainers": [
     {
+      "id": 1792425711515,
+      "title": "U1 Test Trainer",
+      "sub": "Для работы над ошибками в тесте",
+      "href": "https://yoyoenglish.github.io/b1/u1-test-trainer/"
+    },
+    {
       "id": 1792131057810,
       "title": "U2 The loneliest schoolboy",
       "href": "https://yoyoenglish.github.io/b1/u2-the-loneliest-schoolboy/"
