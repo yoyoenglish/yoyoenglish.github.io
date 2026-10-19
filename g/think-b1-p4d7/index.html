@@ -73,6 +73,14 @@ figcaption b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
 @media (max-width:400px){.tabs button{font-size:12.5px}}
 [hidden]{display:none!important}
 </style>
+<style>
+.hw-submit{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 16px}
+.hw-submit h2{margin:0 0 4px;font-size:1.15rem}
+.hw-submit p{margin:0 0 12px;color:var(--ink-soft);font-size:.95rem}
+.hw-names{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.hw-names a{display:block;text-align:center;padding:14px 8px;border-radius:10px;background:var(--marker);color:#1E2A4A;font-weight:700;font-size:1.05rem;text-decoration:none}
+@media (min-width:560px){.hw-names{grid-template-columns:repeat(4,1fr)}}
+</style>
 </head>
 <body>
 <div class="page">
@@ -82,6 +90,16 @@ figcaption b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
     <div class="when" id="g-when"></div>
   </header>
   <p class="warn" id="warn" hidden></p>
+  <section class="hw-submit" aria-label="Сдать домашку">
+    <h2>Сдать домашку</h2>
+    <p>Нажми своё имя → «Загрузить» → выбери фото → «Отправить».</p>
+    <div class="hw-names">
+      <a href="https://forms.yandex.ru/u/6ad6648b1f1eb569030003b3/" target="_blank" rel="noopener">Platon</a>
+      <a href="https://forms.yandex.ru/u/6ad665aa6d2d73e326a5a6e5/" target="_blank" rel="noopener">Yarik</a>
+      <a href="https://forms.yandex.ru/u/6ad665b59029026a7046a7f9/" target="_blank" rel="noopener">Gleb</a>
+      <a href="https://forms.yandex.ru/u/6ad665d395add55201eae190/" target="_blank" rel="noopener">Tim</a>
+    </div>
+  </section>
   <div class="tabs" role="tablist" aria-label="Разделы">
     <button role="tab" aria-selected="true" data-pane="hw">Домашка</button>
     <button role="tab" aria-selected="false" data-pane="gr">Грамматика</button>
