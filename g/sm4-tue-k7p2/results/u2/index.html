@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Super Minds 4, Unit 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #FFFFFF;
+    --surface: #FAFAF7;
+    --card: #FFFFFF;
+    --text: #1D1D1B;
+    --muted: #6B6B66;
+    --line: #E6E4DC;
+    --accent: #FFD43B;
+    --accent-ink: #1D1D1B;
+    --lamp-off: #E9E7E0;
+    --housing: #2B2B29;
+    --neutral: #7C8798;
+    --l90: #1E7B34;
+    --l80: #4CAF50;
+    --l70: #9CCC65;
+    --l60: #F2B807;
+    --l0:  #E0473C;
+    --shadow: 0 1px 2px rgba(29,29,27,.06), 0 8px 24px rgba(29,29,27,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #161614;
+      --surface: #1F1F1C;
+      --card: #242421;
+      --text: #F2F1EC;
+      --muted: #A6A59E;
+      --line: #3A3A35;
+      --accent: #FFD43B;
+      --accent-ink: #1D1D1B;
+      --lamp-off: #3A3A35;
+      --housing: #0F0F0E;
+      --neutral: #9AA5B6;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #161614;
+    --surface: #1F1F1C;
+    --card: #242421;
+    --text: #F2F1EC;
+    --muted: #A6A59E;
+    --line: #3A3A35;
+    --accent: #FFD43B;
+    --accent-ink: #1D1D1B;
+    --lamp-off: #3A3A35;
+    --housing: #0F0F0E;
+    --neutral: #9AA5B6;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Golos Text", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 48px; }
+
+  header.top {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: "Unbounded", "Golos Text", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(22px, 3.2vw, 32px);
+    line-height: 1.15;
+    margin: 0;
+    display: inline-block;
+    padding: 6px 14px 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 10px;
+  }
+  .theme-btn {
+    font: 500 14px/1 "Golos Text", system-ui, sans-serif;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .theme-btn:focus-visible, .student-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .layout { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: start; }
+
+  nav.students {
+    display: flex; flex-direction: column; gap: 6px;
+    position: sticky; top: calc(16px + env(safe-area-inset-top, 0px));
+  }
+  .student-btn {
+    font: 500 16px/1.2 "Golos Text", system-ui, sans-serif;
+    text-align: left;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .student-btn:hover { background: var(--surface); }
+  .student-btn[aria-pressed="true"] {
+    background: var(--accent); color: var(--accent-ink); font-weight: 600;
+  }
+  .student-btn .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 18px;
+    padding: 12px 16px; margin-bottom: 16px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    font-size: 14px; color: var(--muted);
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-item b { color: var(--text); font-weight: 600; white-space: nowrap; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 4px; flex: none; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    display: grid; grid-template-columns: minmax(260px, 340px) 1fr;
+    overflow: hidden;
+  }
+  .card-left {
+    padding: 28px 24px;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;
+  }
+  .st-name {
+    font-family: "Unbounded", "Golos Text", system-ui, sans-serif;
+    font-weight: 600; font-size: 28px; line-height: 1.1; margin: 0;
+  }
+  .st-sub { margin: -6px 0 0; color: var(--muted); font-size: 15px; }
+
+  .ring { position: relative; width: 190px; height: 190px; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring .track { stroke: var(--lamp-off); }
+  .ring .bar { transition: stroke-dashoffset .7s ease, stroke .3s ease; }
+  .ring-center {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .ring-pct {
+    font-family: "Unbounded", "Golos Text", system-ui, sans-serif;
+    font-weight: 700; font-size: 44px; line-height: 1;
+  }
+  .ring-pct small { font-size: 22px; font-weight: 600; margin-left: 2px; }
+  .ring-pts { margin-top: 8px; font-size: 14px; color: var(--muted); }
+
+  .light {
+    display: inline-flex; gap: 8px; padding: 8px 12px;
+    background: var(--housing); border-radius: 999px;
+  }
+  .light .lamp { width: 26px; height: 26px; border-radius: 50%; background: #4A4A46; opacity: .45; }
+  .light .lamp.on { opacity: 1; box-shadow: 0 0 12px 2px currentColor; }
+  .light.small { gap: 5px; padding: 5px 8px; }
+  .light.small .lamp { width: 13px; height: 13px; }
+  .light.small .lamp.on { box-shadow: 0 0 7px 1px currentColor; }
+
+  .verdict {
+    margin: 0; font-weight: 600; font-size: 17px; line-height: 1.35; max-width: 28ch;
+  }
+
+  .card-right { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+  .attend {
+    border: 1.5px dashed var(--neutral);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .attend-title { margin: 0 0 10px; font-weight: 600; font-size: 17px; }
+  .attend-title span { color: var(--neutral); }
+  .squares { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sq { width: 24px; height: 24px; border-radius: 6px; border: 1.5px solid var(--neutral); }
+  .sq.full { background: var(--neutral); }
+
+  .basket {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px;
+    padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+  }
+  .basket-name { margin: 0; font-weight: 600; font-size: 17px; }
+  .basket-pts { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  .basket-pct {
+    font-family: "Unbounded", "Golos Text", system-ui, sans-serif;
+    font-weight: 600; font-size: 24px; line-height: 1;
+    min-width: 3.2ch; text-align: right;
+  }
+  .basket-pct small { font-size: 14px; }
+
+  @media (max-width: 820px) {
+    .layout { grid-template-columns: 1fr; gap: 14px; }
+    nav.students {
+      position: static; flex-direction: row; overflow-x: auto; gap: 6px;
+      padding-bottom: 6px; scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+    }
+    .student-btn { flex: none; border-color: var(--line); }
+    .card { grid-template-columns: 1fr; }
+    .card-left { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 420px) {
+    .wrap { padding: 18px 12px 36px; }
+    .card-right { padding: 16px; }
+    .basket { gap: 12px; padding: 14px; }
+    .ring { width: 170px; height: 170px; }
+    .ring-pct { font-size: 38px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring .bar { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 id="pageTitle">Super Minds 4, Unit 2</h1>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Переключить тему">Тёмная тема</button>
+  </header>
+
+  <div class="layout">
+    <nav class="students" id="studentList" aria-label="Ученики"></nav>
+    <main>
+      <div class="legend" id="legend" aria-label="Шкала результатов"></div>
+      <section class="card" id="card" aria-live="polite"></section>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ===== Данные юнита: меняются только здесь ===== */
+const UNIT = {
+  coursebook: "Super Minds 4",
+  unit: 2,
+  totalLessons: 7,
+  max: { lessons: 420, hw: 190, test: 300 }
+};
+
+const STUDENTS = [
+  { name: "Matt",   attended: 7, lessons: 300, hw: 120, test: 210 },
+  { name: "Olesya", attended: 6, lessons: 250, hw: 190, test: 220 },
+  { name: "Vicka",  attended: 5, lessons: 270, hw: 140, test: 270 },
+  { name: "Dasha",  attended: 6, lessons: 270, hw: 190, test: 180 },
+  { name: "Zlata",  attended: 6, lessons: 330, hw: 190, test: 280 },
+  { name: "Alyona", attended: 7, lessons: 360, hw: 180, test: 270 },
+  { name: "Tim",    attended: 5, lessons: 260, hw: 130, test: 270 },
+  { name: "Mike",   attended: 5, lessons: 240, hw: 170, test: 190 }
+];
+
+/* ===== Шкала-светофор ===== */
+const LEVELS = [
+  { min: 90, color: "var(--l90)", lamp: 2, range: "90% и выше", label: "Очень уверенно" },
+  { min: 80, color: "var(--l80)", lamp: 2, range: "80–90%",     label: "Уверенно" },
+  { min: 70, color: "var(--l70)", lamp: 2, range: "70–80%",     label: "Положительный результат" },
+  { min: 60, color: "var(--l60)", lamp: 1, range: "60–70%",     label: "Двигаемся вперёд, но есть моменты для обсуждения" },
+  { min: 0,  color: "var(--l0)",  lamp: 0, range: "ниже 60%",   label: "Нужно срочно исправлять" }
+];
+
+/* Проценты считаются из баллов автоматически; уровень берётся по округлённому проценту,
+   чтобы цвет всегда совпадал с показанным числом */
+const pct = (v, m) => m > 0 ? Math.round(v / m * 100) : 0;
+const levelOf = p => LEVELS.find(l => p >= l.min);
+const TOTAL_MAX = UNIT.max.lessons + UNIT.max.hw + UNIT.max.test;
+const unitTitle = `${UNIT.coursebook}, Unit ${UNIT.unit}`;
+
+function lightHTML(level, small) {
+  const lamps = [
+    { c: "var(--l0)" },
+    { c: "var(--l60)" },
+    { c: level.lamp === 2 ? level.color : "var(--l80)" }
+  ];
+  return `<span class="light${small ? " small" : ""}" aria-hidden="true">` +
+    lamps.map((l, i) => {
+      const on = i === level.lamp;
+      return `<span class="lamp${on ? " on" : ""}" style="${on ? `background:${l.c};color:${l.c}` : ""}"></span>`;
+    }).join("") + `</span>`;
+}
+
+function renderLegend() {
+  document.getElementById("legend").innerHTML = LEVELS.map(l =>
+    `<span class="legend-item"><span class="legend-swatch" style="background:${l.color}"></span><b>${l.range}</b> ${l.label}</span>`
+  ).join("");
+}
+
+function renderList(active) {
+  const nav = document.getElementById("studentList");
+  nav.innerHTML = STUDENTS.map((s, i) => {
+    const total = s.lessons + s.hw + s.test;
+    const lv = levelOf(pct(total, TOTAL_MAX));
+    return `<button class="student-btn" type="button" data-i="${i}" aria-pressed="${i === active}">
+      <span>${s.name}</span><span class="dot" style="background:${lv.color}" aria-hidden="true"></span></button>`;
+  }).join("");
+  nav.querySelectorAll(".student-btn").forEach(b =>
+    b.addEventListener("click", () => select(+b.dataset.i)));
+}
+
+function basketHTML(name, value, max) {
+  const p = pct(value, max);
+  const lv = levelOf(p);
+  return `<div class="basket">
+    ${lightHTML(lv, true)}
+    <div><p class="basket-name">${name}</p><p class="basket-pts">${value} из ${max} баллов</p></div>
+    <div class="basket-pct" style="color:${lv.color}">${p}<small>%</small></div>
+  </div>`;
+}
+
+function renderCard(i) {
+  const s = STUDENTS[i];
+  const total = s.lessons + s.hw + s.test;
+  const p = pct(total, TOTAL_MAX);
+  const lv = levelOf(p);
+  const R = 80, C = 2 * Math.PI * R;
+  const squares = Array.from({ length: UNIT.totalLessons }, (_, k) =>
+    `<span class="sq${k < s.attended ? " full" : ""}"></span>`).join("");
+
+  document.getElementById("card").innerHTML = `
+    <div class="card-left">
+      <h2 class="st-name">${s.name}</h2>
+      <p class="st-sub">${unitTitle}</p>
+      <div class="ring" role="img" aria-label="Итог ${p}%, ${total} из ${TOTAL_MAX} баллов">
+        <svg viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="${R}" fill="none" stroke-width="16"/>
+          <circle class="bar" cx="95" cy="95" r="${R}" fill="none" stroke-width="16" stroke-linecap="round"
+            stroke="${lv.color}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct">${p}<small>%</small></div>
+          <div class="ring-pts">${total} из ${TOTAL_MAX} баллов</div>
+        </div>
+      </div>
+      ${lightHTML(lv, false)}
+      <p class="verdict">${lv.label}</p>
+    </div>
+    <div class="card-right">
+      <div class="attend">
+        <p class="attend-title">Посещено занятий <span>${s.attended} из ${UNIT.totalLessons}</span></p>
+        <div class="squares" aria-hidden="true">${squares}</div>
+      </div>
+      ${basketHTML("Занятия", s.lessons, UNIT.max.lessons)}
+      ${basketHTML("Домашние задания", s.hw, UNIT.max.hw)}
+      ${basketHTML("Тест", s.test, UNIT.max.test)}
+    </div>`;
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const bar = document.querySelector(".ring .bar");
+    if (bar) bar.style.strokeDashoffset = C * (1 - Math.min(p, 100) / 100);
+  }));
+}
+
+function select(i) {
+  renderList(i);
+  renderCard(i);
+}
+
+/* ===== Тема ===== */
+const themeBtn = document.getElementById("themeBtn");
+function isDark() {
+  const t = document.documentElement.getAttribute("data-theme");
+  if (t) return t === "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function syncThemeBtn() { themeBtn.textContent = isDark() ? "Светлая тема" : "Тёмная тема"; }
+themeBtn.addEventListener("click", () => {
+  const next = isDark() ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("yoyo-theme", next); } catch (e) {}
+  syncThemeBtn();
+});
+try {
+  const saved = localStorage.getItem("yoyo-theme");
+  if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
+} catch (e) {}
+syncThemeBtn();
+
+document.title = unitTitle;
+document.getElementById("pageTitle").textContent = unitTitle;
+renderLegend();
+select(0);
+</script>
+</body>
+</html>
