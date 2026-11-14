@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Minds 4, Unit 2 — результаты (Ср/Пт)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#ffffff; --text:#1d2330; --muted:#6b7385; --line:#e3e6ec;
+    --chip:#ffffff; --chip-active:#1d2330; --chip-active-text:#ffffff;
+    --lamp-off:#e4e7ed; --housing:#2a2f3a; --track:#eceef2;
+    --c-dg:#1e8e3e; --c-g:#43b04a; --c-lg:#9ccc65; --c-y:#f2c230; --c-r:#e5533d;
+    --att:#5b6b8c;
+  }
+  [data-theme="dark"]{
+    --bg:#12151b; --card:#1b2029; --text:#eef1f6; --muted:#9aa3b5; --line:#2b313d;
+    --chip:#1b2029; --chip-active:#eef1f6; --chip-active-text:#12151b;
+    --lamp-off:#343b48; --housing:#0c0f14; --track:#2b313d;
+    --att:#9fb0d2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Golos Text",system-ui,sans-serif;transition:background .2s,color .2s}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 40px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+  h1{font-family:"Unbounded",sans-serif;font-weight:700;font-size:28px;margin:0}
+  .sub{color:var(--muted);font-size:15px;margin-top:6px}
+  .theme-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:8px 14px;font:500 14px "Golos Text",system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:14px}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .legend i{width:14px;height:14px;border-radius:50%;display:inline-block}
+  .layout{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}
+  .students{display:flex;flex-direction:column;gap:8px;position:sticky;top:16px}
+  .student-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;border:1px solid var(--line);background:var(--chip);color:var(--text);border-radius:12px;padding:11px 14px;font:600 15px "Golos Text",system-ui,sans-serif;cursor:pointer;transition:transform .1s}
+  .student-btn:hover{transform:translateX(2px)}
+  .student-btn.active{background:var(--chip-active);color:var(--chip-active-text);border-color:var(--chip-active)}
+  .student-btn .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;display:grid;grid-template-columns:300px 1fr;gap:32px}
+  .left{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .name{font-family:"Unbounded",sans-serif;font-weight:700;font-size:26px;margin:0}
+  .unit{color:var(--muted);font-size:14px;margin:6px 0 18px}
+  .ring{position:relative;width:200px;height:200px}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ring .pct{font-family:"Unbounded",sans-serif;font-weight:700;font-size:42px}
+  .ring .pts{color:var(--muted);font-size:13px;margin-top:2px}
+  .big-light{display:flex;gap:12px;background:var(--housing);padding:10px 14px;border-radius:40px;margin:20px 0 12px}
+  .big-light .lamp{width:30px;height:30px}
+  .lamp{border-radius:50%;background:var(--lamp-off);transition:background .2s,box-shadow .2s}
+  .verdict{font-weight:600;font-size:16px;line-height:1.35;max-width:260px}
+  .right{display:flex;flex-direction:column;gap:14px;justify-content:center}
+  .row{border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:center}
+  .row .title{font-weight:700;font-size:16px}
+  .row .val{color:var(--muted);font-size:14px}
+  .row .rp{font-family:"Unbounded",sans-serif;font-weight:700;font-size:24px;text-align:right}
+  .small-light{display:flex;gap:6px;background:var(--housing);padding:5px 8px;border-radius:20px;justify-self:end}
+  .small-light .lamp{width:14px;height:14px}
+  .bar{grid-column:1/-1;height:8px;border-radius:8px;background:var(--track);overflow:hidden}
+  .bar>div{height:100%;border-radius:8px;transition:width .4s}
+  .att{border:1.5px dashed var(--att);}
+  .att .title{color:var(--att)}
+  .squares{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+  .sq{width:26px;height:26px;border-radius:6px;border:2px solid var(--att)}
+  .sq.on{background:var(--att)}
+  .note{color:var(--muted);font-size:13px;margin-top:18px;text-align:center}
+  @media (max-width:820px){
+    .layout{grid-template-columns:1fr}
+    .students{flex-direction:row;overflow-x:auto;position:static;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+    .student-btn{flex:none}
+    .student-btn:hover{transform:none}
+    .card{grid-template-columns:1fr;padding:22px 16px;gap:22px}
+    h1{font-size:21px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Super Minds 4, Unit 2</h1>
+      <div class="sub">Группа Ср/Пт · результаты юнита</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">🌙 Тёмная тема</button>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="layout">
+    <nav class="students" id="students"></nav>
+    <section class="card" id="card"></section>
+  </div>
+  <div class="note">Проценты считаются автоматически от максимума баллов за юнит. Пропущенные занятия снижают баллы за занятия.</div>
+</div>
+
+<script>
+/* ===== ВХОДНЫЕ ДАННЫЕ ЮНИТА ===== */
+const UNIT = {
+  coursebook: "Super Minds 4",
+  unit: 2,
+  lessons: 7,
+  max: { lessons: 420, hw: 240, test: 310 }
+};
+const STUDENTS = [
+  { name: "Alyona",  attended: 6, lessons: 310, hw: 240, test: 300 },
+  { name: "Dana",    attended: 7, lessons: 370, hw: 240, test: 280 },
+  { name: "Vova",    attended: 7, lessons: 360, hw: 220, test: 240 },
+  { name: "Ruslan",  attended: 4, lessons: 230, hw: 110, test: 240 },
+  { name: "Kirill B",attended: 4, lessons: 220, hw: 110, test: 270 },
+  { name: "Fedor",   attended: 7, lessons: 360, hw: 240, test: 300 },
+  { name: "Nikita",  attended: 7, lessons: 280, hw: 0,   test: 210 },
+  { name: "Kirill P",attended: 6, lessons: 330, hw: 180, test: 280 }
+];
+/* ================================= */
+
+const SCALE = [
+  { min: 90, color: "var(--c-dg)", lamp: 2, label: "90% и выше", verdict: "Очень уверенно" },
+  { min: 80, color: "var(--c-g)",  lamp: 2, label: "80–90%",     verdict: "Уверенно" },
+  { min: 70, color: "var(--c-lg)", lamp: 2, label: "70–80%",     verdict: "Положительный результат" },
+  { min: 60, color: "var(--c-y)",  lamp: 1, label: "60–70%",     verdict: "Двигаемся вперёд, но есть моменты для обсуждения" },
+  { min: 0,  color: "var(--c-r)",  lamp: 0, label: "ниже 60%",   verdict: "Нужно срочно исправлять" }
+];
+const level = p => SCALE.find(s => p >= s.min);
+const pct = (v, m) => Math.round(v / m * 100);
+const MAX_TOTAL = UNIT.max.lessons + UNIT.max.hw + UNIT.max.test;
+
+document.getElementById("legend").innerHTML = SCALE.map(s =>
+  `<span><i style="background:${s.color}"></i>${s.label} — ${s.verdict.toLowerCase()}</span>`).join("");
+
+function lights(lv, cls){
+  const on = ["var(--c-r)","var(--c-y)",lv.color];
+  return `<div class="${cls}">` + [0,1,2].map(i =>
+    `<div class="lamp" style="${i===lv.lamp?`background:${on[i]};box-shadow:0 0 12px ${on[i]}`:""}"></div>`).join("") + `</div>`;
+}
+function row(title, v, m){
+  const p = pct(v, m), lv = level(p);
+  return `<div class="row">
+    <div><div class="title">${title}</div><div class="val">${v} из ${m} баллов</div></div>
+    <div style="display:flex;align-items:center;gap:12px">${lights(lv,"small-light")}<div class="rp" style="color:${lv.color}">${p}%</div></div>
+    <div class="bar"><div style="width:${Math.min(p,100)}%;background:${lv.color}"></div></div>
+  </div>`;
+}
+function render(i){
+  const s = STUDENTS[i];
+  const total = s.lessons + s.hw + s.test, tp = pct(total, MAX_TOTAL), lv = level(tp);
+  const R = 86, C = 2 * Math.PI * R;
+  document.getElementById("card").innerHTML = `
+    <div class="left">
+      <h2 class="name">${s.name}</h2>
+      <div class="unit">${UNIT.coursebook}, Unit ${UNIT.unit}</div>
+      <div class="ring">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="${R}" fill="none" stroke="var(--track)" stroke-width="16"/>
+          <circle cx="100" cy="100" r="${R}" fill="none" stroke="${lv.color}" stroke-width="16" stroke-linecap="round"
+            stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - Math.min(tp,100) / 100)}"/>
+        </svg>
+        <div class="center"><div class="pct">${tp}%</div><div class="pts">${total} из ${MAX_TOTAL} баллов</div></div>
+      </div>
+      ${lights(lv,"big-light")}
+      <div class="verdict" style="color:${lv.color}">${lv.verdict}</div>
+    </div>
+    <div class="right">
+      <div class="row att">
+        <div><div class="title">Посещено занятий</div><div class="val">${s.attended} из ${UNIT.lessons}</div></div>
+        <div class="rp" style="color:var(--att)">${s.attended}/${UNIT.lessons}</div>
+        <div class="squares">${Array.from({length:UNIT.lessons},(_,k)=>`<div class="sq ${k<s.attended?"on":""}"></div>`).join("")}</div>
+      </div>
+      ${row("Занятия", s.lessons, UNIT.max.lessons)}
+      ${row("Домашние задания", s.hw, UNIT.max.hw)}
+      ${row("Тест", s.test, UNIT.max.test)}
+    </div>`;
+  document.querySelectorAll(".student-btn").forEach((b,k)=>b.classList.toggle("active",k===i));
+}
+document.getElementById("students").innerHTML = STUDENTS.map((s,i)=>{
+  const lv = level(pct(s.lessons+s.hw+s.test, MAX_TOTAL));
+  return `<button class="student-btn" data-i="${i}">${s.name}<span class="dot" style="background:${lv.color}"></span></button>`;
+}).join("");
+document.querySelectorAll(".student-btn").forEach(b=>b.onclick=()=>render(+b.dataset.i));
+render(0);
+
+const btn = document.getElementById("themeBtn");
+function setTheme(t){
+  document.documentElement.dataset.theme = t;
+  btn.textContent = t === "dark" ? "☀️ Светлая тема" : "🌙 Тёмная тема";
+}
+setTheme(window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+btn.onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+</script>
+</body>
+</html>
