@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Minds 3, Unit 1 — результаты</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1d2330; --muted: #6b7280;
+    --line: #e3e6eb; --side-hover: #eef1f5; --side-active: #1d2330; --side-active-text: #ffffff;
+    --lamp-off: #d9dce2; --housing: #2b3140; --track: #e9ecf0; --neutral: #5b6b85;
+    --c-dark-green: #1e8e3e; --c-green: #4caf50; --c-light-green: #9ccc65;
+    --c-yellow: #f2c230; --c-red: #e5533d;
+  }
+  [data-theme="dark"] {
+    --bg: #12151c; --card: #1b202b; --text: #eef1f6; --muted: #9aa3b2;
+    --line: #2b3242; --side-hover: #232a37; --side-active: #eef1f6; --side-active-text: #12151c;
+    --lamp-off: #3a4253; --housing: #0b0d12; --track: #2b3242; --neutral: #93a4c3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Golos Text", system-ui, sans-serif; transition: background .2s, color .2s; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 22px 28px 8px; }
+  h1 { font-family: "Unbounded", sans-serif; font-size: 24px; font-weight: 700; margin: 0; }
+  .theme-btn { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 999px; padding: 8px 14px; font: 500 14px "Golos Text", sans-serif; cursor: pointer; }
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 16px 28px 32px; max-width: 1180px; }
+  .side { display: flex; flex-direction: column; gap: 6px; }
+  .side button { text-align: left; border: 0; background: transparent; color: var(--text); padding: 11px 14px; border-radius: 12px; font: 500 16px "Golos Text", sans-serif; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .side button:hover { background: var(--side-hover); }
+  .side button.active { background: var(--side-active); color: var(--side-active-text); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .main { min-width: 0; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: grid; grid-template-columns: 300px 1fr; gap: 32px; }
+  .left { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+  .name { font-family: "Unbounded", sans-serif; font-size: 26px; font-weight: 700; }
+  .sub { color: var(--muted); font-size: 14px; margin-top: -8px; }
+  .ring-wrap { position: relative; width: 200px; height: 200px; }
+  .ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .ring-pct { font-family: "Unbounded", sans-serif; font-size: 40px; font-weight: 700; }
+  .ring-pts { font-size: 13px; color: var(--muted); }
+  .tl { background: var(--housing); border-radius: 14px; display: inline-flex; padding: 8px; gap: 8px; }
+  .tl .lamp { border-radius: 50%; background: var(--lamp-off); }
+  .tl.big .lamp { width: 34px; height: 34px; }
+  .tl.small { border-radius: 9px; padding: 5px; gap: 5px; }
+  .tl.small .lamp { width: 15px; height: 15px; }
+  .lamp.on { box-shadow: 0 0 12px 2px var(--glow); }
+  .verdict { font-weight: 600; font-size: 16px; line-height: 1.35; max-width: 270px; }
+  .right { display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+  .row { border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: grid; grid-template-columns: 1fr auto; gap: 10px 14px; align-items: center; }
+  .row-title { font-weight: 600; font-size: 17px; }
+  .row-meta { display: flex; align-items: center; gap: 12px; }
+  .row-pct { font-family: "Unbounded", sans-serif; font-weight: 600; font-size: 20px; min-width: 64px; text-align: right; }
+  .row-pts { color: var(--muted); font-size: 14px; }
+  .bar { grid-column: 1 / -1; height: 8px; border-radius: 99px; background: var(--track); overflow: hidden; }
+  .bar > div { height: 100%; border-radius: 99px; }
+  .att { border: 2px dashed var(--neutral); }
+  .att .row-title { color: var(--text); }
+  .squares { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; }
+  .sq { width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--neutral); }
+  .sq.on { background: var(--neutral); }
+  @media (max-width: 860px) {
+    header { padding: 16px 16px 4px; }
+    h1 { font-size: 19px; }
+    .layout { grid-template-columns: 1fr; padding: 12px 16px 24px; gap: 14px; }
+    .side { flex-direction: row; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .side button { flex: none; background: var(--card); border: 1px solid var(--line); }
+    .card { grid-template-columns: 1fr; padding: 20px; gap: 22px; }
+    .row { grid-template-columns: 1fr; }
+    .row-pts { white-space: nowrap; }
+    .row-meta { justify-content: space-between; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title"></h1>
+  <button class="theme-btn" id="themeBtn">🌙 Тёмная тема</button>
+</header>
+<div class="layout">
+  <nav class="side" id="side"></nav>
+  <main class="main">
+    <div class="legend" id="legend"></div>
+    <section class="card" id="card"></section>
+  </main>
+</div>
+
+<script>
+/* ===== Данные юнита (меняются только здесь) ===== */
+const UNIT = {
+  coursebook: "Super Minds 3",
+  unit: 1,
+  lessons: 7,
+  max: { lessons: 420, hw: 210, test: 250 }
+};
+const STUDENTS = [
+  { name: "Polly",    attended: 5, lessons: 300, hw: 210, test: 200 },
+  { name: "Mike",     attended: 5, lessons: 350, hw: 150, test: 240 },
+  { name: "Veronica", attended: 6, lessons: 320, hw: 160, test: 160 },
+  { name: "Vasilisa", attended: 6, lessons: 370, hw: 190, test: 190 },
+  { name: "Ksusha",   attended: 6, lessons: 350, hw: 70,  test: 220 },
+  { name: "Mark",     attended: 6, lessons: 260, hw: 210, test: 230 },
+  { name: "Fedor",    attended: 5, lessons: 300, hw: 210, test: 250 }
+];
+
+/* ===== Шкала-светофор ===== */
+const SCALE = [
+  { min: 90, color: "--c-dark-green",  lamp: 2, label: "90%+ — очень уверенно",  verdict: "Очень уверенно!" },
+  { min: 80, color: "--c-green",       lamp: 2, label: "80–90% — уверенно",       verdict: "Уверенно!" },
+  { min: 70, color: "--c-light-green", lamp: 2, label: "70–80% — позитивно",      verdict: "Позитивный результат" },
+  { min: 60, color: "--c-yellow",      lamp: 1, label: "60–70% — двигаемся вперёд", verdict: "Двигаемся вперёд, но есть моменты для обсуждения" },
+  { min: 0,  color: "--c-red",         lamp: 0, label: "ниже 60% — нужно срочно исправлять", verdict: "Нужно срочно исправлять" }
+];
+const pct = (v, m) => Math.round(v / m * 100);
+const level = p => SCALE.find(s => p >= s.min);
+const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+function trafficLight(p, size) {
+  const lv = level(p);
+  const offs = ["--c-red", "--c-yellow", lv.lamp === 2 ? lv.color : "--c-green"];
+  return `<div class="tl ${size}">` + [0, 1, 2].map(i => {
+    const on = i === lv.lamp;
+    const c = cssVar(i === 2 && on ? lv.color : offs[i]);
+    return `<div class="lamp${on ? " on" : ""}" style="${on ? `background:${c};--glow:${c}88` : ""}"></div>`;
+  }).join("") + `</div>`;
+}
+
+function row(title, val, max) {
+  const p = pct(val, max), c = cssVar(level(p).color);
+  return `<div class="row">
+    <div class="row-title">${title}</div>
+    <div class="row-meta">${trafficLight(p, "small")}<span class="row-pts">${val} из ${max} баллов</span><span class="row-pct">${p}%</span></div>
+    <div class="bar"><div style="width:${Math.min(p,100)}%;background:${c}"></div></div>
+  </div>`;
+}
+
+const MAX_TOTAL = UNIT.max.lessons + UNIT.max.hw + UNIT.max.test;
+const total = s => s.lessons + s.hw + s.test;
+let current = 0;
+
+function render() {
+  document.getElementById("title").textContent = `${UNIT.coursebook}, Unit ${UNIT.unit}`;
+  document.title = `${UNIT.coursebook}, Unit ${UNIT.unit} — результаты`;
+
+  document.getElementById("legend").innerHTML = SCALE.map(s =>
+    `<span><i style="background:${cssVar(s.color)}"></i>${s.label}</span>`).join("");
+
+  document.getElementById("side").innerHTML = STUDENTS.map((s, i) => {
+    const p = pct(total(s), MAX_TOTAL);
+    return `<button class="${i === current ? "active" : ""}" data-i="${i}">${s.name}<span class="dot" style="background:${cssVar(level(p).color)}"></span></button>`;
+  }).join("");
+  document.querySelectorAll(".side button").forEach(b => b.onclick = () => { current = +b.dataset.i; render(); });
+
+  const s = STUDENTS[current];
+  const t = total(s), p = pct(t, MAX_TOTAL), lv = level(p), c = cssVar(lv.color);
+  const R = 84, C = 2 * Math.PI * R;
+  const squares = Array.from({ length: UNIT.lessons }, (_, i) => `<div class="sq${i < s.attended ? " on" : ""}"></div>`).join("");
+
+  document.getElementById("card").innerHTML = `
+    <div class="left">
+      <div class="name">${s.name}</div>
+      <div class="sub">${UNIT.coursebook}, Unit ${UNIT.unit}</div>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="${R}" fill="none" stroke="${cssVar("--track")}" stroke-width="18"/>
+          <circle cx="100" cy="100" r="${R}" fill="none" stroke="${c}" stroke-width="18" stroke-linecap="round"
+            stroke-dasharray="${C * Math.min(p,100) / 100} ${C}"/>
+        </svg>
+        <div class="ring-center"><div class="ring-pct">${p}%</div><div class="ring-pts">${t} из ${MAX_TOTAL} баллов</div></div>
+      </div>
+      ${trafficLight(p, "big")}
+      <div class="verdict" style="color:${c}">${lv.verdict}</div>
+    </div>
+    <div class="right">
+      <div class="row att">
+        <div class="row-title">Посещено занятий ${s.attended} из ${UNIT.lessons}</div>
+        <div></div>
+        <div class="squares">${squares}</div>
+      </div>
+      ${row("Занятия", s.lessons, UNIT.max.lessons)}
+      ${row("Домашние задания", s.hw, UNIT.max.hw)}
+      ${row("Тест", s.test, UNIT.max.test)}
+    </div>`;
+}
+
+/* ===== Тема ===== */
+const btn = document.getElementById("themeBtn");
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  btn.textContent = t === "dark" ? "☀️ Светлая тема" : "🌙 Тёмная тема";
+  try { localStorage.setItem("yoyo-theme", t); } catch (e) {}
+  render();
+}
+let saved = null;
+try { saved = localStorage.getItem("yoyo-theme"); } catch (e) {}
+btn.onclick = () => setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+</script>
+</body>
+</html>
