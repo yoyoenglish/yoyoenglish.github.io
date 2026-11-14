@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Minds 6, Unit 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f6f8;--card:#ffffff;--text:#1d2129;--muted:#6b7280;--line:#e5e7eb;
+  --c-dg:#2e9e3f;--c-g:#6cc04a;--c-lg:#b5dd8f;--c-y:#f2c230;--c-r:#e2553f;
+  --lamp-off:#d9dce1;--housing:#2b2f36;--sel:#1d2129;--selText:#fff;--neutral:#5b6b82;
+}
+[data-theme="dark"]{
+  --bg:#14161a;--card:#1e2127;--text:#eceef2;--muted:#9aa1ad;--line:#2f333b;
+  --lamp-off:#3a3f48;--housing:#0d0f12;--sel:#eceef2;--selText:#14161a;--neutral:#9db0cc;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Golos Text",system-ui,sans-serif;}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+h1{font-family:"Unbounded",sans-serif;font-weight:700;font-size:26px;margin:0}
+.theme-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer}
+.layout{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+.students{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px}
+.students button{all:unset;cursor:pointer;padding:10px 12px;border-radius:10px;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.students button:hover{background:var(--line)}
+.students button.active{background:var(--sel);color:var(--selText)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:13px}
+.legend span{display:flex;align-items:center;gap:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;grid-template-columns:300px 1fr;gap:28px}
+.left{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.name{font-family:"Unbounded",sans-serif;font-size:24px;font-weight:700}
+.sub{color:var(--muted);font-size:14px;margin-top:-6px}
+.ring{position:relative;width:190px;height:190px}
+.ring svg{transform:rotate(-90deg)}
+.ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .pct{font-family:"Unbounded",sans-serif;font-size:40px;font-weight:700}
+.ring .pts{font-size:13px;color:var(--muted)}
+.tl{display:flex;gap:8px;background:var(--housing);padding:8px 12px;border-radius:30px}
+.tl i{display:block;width:26px;height:26px;border-radius:50%;background:var(--lamp-off)}
+.tl.small{gap:5px;padding:5px 8px}
+.tl.small i{width:14px;height:14px}
+.verdict{font-weight:600;font-size:16px;max-width:260px}
+.right{display:flex;flex-direction:column;gap:12px;justify-content:center}
+.row{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center}
+.row .title{font-weight:600;font-size:16px}
+.row .val{font-size:14px;color:var(--muted)}
+.row .p{font-family:"Unbounded",sans-serif;font-weight:700;font-size:20px;text-align:right}
+.row .meta{display:flex;align-items:center;gap:12px;justify-content:flex-end}
+.bar{grid-column:1/-1;height:8px;border-radius:5px;background:var(--line);overflow:hidden}
+.bar b{display:block;height:100%;border-radius:5px}
+.att{border:1.5px dashed var(--neutral)}
+.squares{display:flex;gap:6px;justify-content:flex-end}
+.squares i{width:20px;height:20px;border-radius:5px;border:2px solid var(--neutral)}
+.squares i.on{background:var(--neutral)}
+@media(max-width:760px){
+  .layout{grid-template-columns:1fr}
+  .students{flex-direction:row;overflow-x:auto;padding:8px}
+  .students button{white-space:nowrap}
+  .card{grid-template-columns:1fr;padding:18px}
+  h1{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title"></h1>
+    <button class="theme-btn" id="themeBtn" type="button">🌙 Тёмная тема</button>
+  </header>
+  <div class="layout">
+    <nav class="students" id="students"></nav>
+    <main>
+      <div class="legend" id="legend"></div>
+      <section class="card" id="card"></section>
+    </main>
+  </div>
+</div>
+<script>
+/* ===== ДАННЫЕ ЮНИТА ===== */
+const UNIT = {
+  coursebook: "Super Minds 6",
+  unit: 2,
+  lessons: 6,
+  max: { lessons: 360, hw: 230, test: 260 },
+  students: [
+    { name: "Alex",      attended: 6, lessons: 360, hw: 190, test: 250 },
+    { name: "Tikhon",    attended: 6, lessons: 350, hw: 230, test: 260 },
+    { name: "Taya",      attended: 4, lessons: 240, hw: 150, test: 250 },
+    { name: "Nastya",    attended: 3, lessons: 150, hw: 140, test: 200 },
+    { name: "Anastasia", attended: 5, lessons: 230, hw: 200, test: 150 },
+    { name: "Dasha",     attended: 6, lessons: 290, hw: 170, test: 210 },
+    { name: "Tanya",     attended: 6, lessons: 290, hw: 150, test: 240 }
+  ]
+};
+/* ======================== */
+
+const SCALE = [
+  { min: 90, color: "var(--c-dg)", label: "90%+ — очень уверенно",  verdict: "Очень уверенно!", lamp: 2 },
+  { min: 80, color: "var(--c-g)",  label: "80–90% — уверенно",      verdict: "Уверенно!", lamp: 2 },
+  { min: 70, color: "var(--c-lg)", label: "70–80% — позитивно",     verdict: "Позитивный результат", lamp: 2 },
+  { min: 60, color: "var(--c-y)",  label: "60–70% — двигаемся вперёд", verdict: "Двигаемся вперёд, но есть моменты для обсуждения", lamp: 1 },
+  { min: 0,  color: "var(--c-r)",  label: "ниже 60% — срочно исправляем", verdict: "Нужно срочно исправлять", lamp: 0 }
+];
+const LAMP_COLORS = ["var(--c-r)", "var(--c-y)", null];
+const pct = (v, m) => Math.round(v / m * 100);
+const level = p => SCALE.find(s => p >= s.min);
+const totalMax = UNIT.max.lessons + UNIT.max.hw + UNIT.max.test;
+
+function lights(p, small) {
+  const lv = level(p);
+  const on = [LAMP_COLORS[0], LAMP_COLORS[1], lv.color];
+  return `<div class="tl${small ? " small" : ""}">` +
+    [0, 1, 2].map(i => `<i style="${i === lv.lamp ? "background:" + on[i] + ";box-shadow:0 0 10px " + on[i] : ""}"></i>`).join("") +
+    `</div>`;
+}
+
+document.getElementById("title").textContent = `${UNIT.coursebook}, Unit ${UNIT.unit}`;
+document.title = `${UNIT.coursebook}, Unit ${UNIT.unit}`;
+document.getElementById("legend").innerHTML =
+  SCALE.map(s => `<span><i class="dot" style="background:${s.color}"></i>${s.label}</span>`).join("");
+
+function row(title, v, m) {
+  const p = pct(v, m), c = level(p).color;
+  return `<div class="row">
+    <div><div class="title">${title}</div><div class="val">${v} из ${m} баллов</div></div>
+    <div class="meta">${lights(p, true)}<div class="p">${p}%</div></div>
+    <div class="bar"><b style="width:${Math.min(p,100)}%;background:${c}"></b></div>
+  </div>`;
+}
+
+function render(i) {
+  const s = UNIT.students[i];
+  const total = s.lessons + s.hw + s.test;
+  const p = pct(total, totalMax), lv = level(p);
+  const R = 80, C = 2 * Math.PI * R;
+  document.getElementById("card").innerHTML = `
+    <div class="left">
+      <div class="name">${s.name}</div>
+      <div class="sub">${UNIT.coursebook}, Unit ${UNIT.unit}</div>
+      <div class="ring">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle cx="95" cy="95" r="${R}" fill="none" stroke="var(--line)" stroke-width="16"/>
+          <circle cx="95" cy="95" r="${R}" fill="none" stroke="${lv.color}" stroke-width="16" stroke-linecap="round"
+            stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - Math.min(p,100) / 100)}"/>
+        </svg>
+        <div class="center"><div class="pct">${p}%</div><div class="pts">${total} из ${totalMax} баллов</div></div>
+      </div>
+      ${lights(p)}
+      <div class="verdict">${lv.verdict}</div>
+    </div>
+    <div class="right">
+      <div class="row att">
+        <div><div class="title">Посещено занятий</div><div class="val">${s.attended} из ${UNIT.lessons}</div></div>
+        <div class="squares">${Array.from({length: UNIT.lessons}, (_, k) => `<i class="${k < s.attended ? "on" : ""}"></i>`).join("")}</div>
+      </div>
+      ${row("Занятия", s.lessons, UNIT.max.lessons)}
+      ${row("Домашние задания", s.hw, UNIT.max.hw)}
+      ${row("Тест", s.test, UNIT.max.test)}
+    </div>`;
+  document.querySelectorAll(".students button").forEach((b, k) => b.classList.toggle("active", k === i));
+}
+
+document.getElementById("students").innerHTML = UNIT.students.map((s, i) => {
+  const p = pct(s.lessons + s.hw + s.test, totalMax);
+  return `<button type="button" data-i="${i}">${s.name}<i class="dot" style="background:${level(p).color}"></i></button>`;
+}).join("");
+document.querySelectorAll(".students button").forEach(b => b.addEventListener("click", () => render(+b.dataset.i)));
+
+const themeBtn = document.getElementById("themeBtn");
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  themeBtn.textContent = t === "dark" ? "☀️ Светлая тема" : "🌙 Тёмная тема";
+  try { localStorage.setItem("yoyo-theme", t); } catch (e) {}
+}
+let saved = "light"; try { saved = localStorage.getItem("yoyo-theme") || "light"; } catch (e) {}
+setTheme(saved);
+themeBtn.addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
+
+render(0);
+</script>
+</body>
+</html>
