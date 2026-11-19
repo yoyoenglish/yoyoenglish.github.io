@@ -6,6 +6,14 @@
   },
   "homework": [
     {
+      "id": 1795107017234,
+      "date": "19 ноября, четверг",
+      "due": "ко вторнику",
+      "tasks": [
+        "Do the U2 test trainer - send me screenshots"
+      ]
+    },
+    {
       "id": 1794327526941,
       "date": "10 ноября, вторник",
       "due": "к четвергу",
