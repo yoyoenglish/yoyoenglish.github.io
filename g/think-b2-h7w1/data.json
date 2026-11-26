@@ -3,7 +3,17 @@
     "title": "Группа Think B2",
     "schedule": "Среда и четверг, 19:00"
   },
-  "homework": [],
+  "homework": [
+    {
+      "id": 1795712001902,
+      "date": "26 ноября, четверг",
+      "due": "к среде",
+      "tasks": [
+        "Wb p 28 ex 1,2,3,4"
+      ]
+    }
+  ],
   "grammar": [],
-  "trainers": []
+  "trainers": [],
+  "results": []
 }
